@@ -21,6 +21,12 @@ struct GoogleMaps3DDemoApp: App {
     WindowGroup {
       NavigationView {
         List {
+          // Reproduction for issuetracker.google.com/issues/543049057 —
+          // unbounded tile memory growth during continuous camera movement.
+          // First in the list so it is one tap from launch.
+          NavigationLink(destination: TileMemoryGrowthDemo()) {
+            Text("⚠︎ Tile Memory Growth Repro")
+          }
           NavigationLink(destination: ContentView()) {
             Text("Basic Map")
           }
