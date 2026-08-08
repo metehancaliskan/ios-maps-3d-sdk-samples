@@ -25,17 +25,24 @@ accumulates inside the SDK.
 
 1. Add your key: `.xcconfig` with `MAPS_API_KEY`, or `Info.plist` (same as
    upstream).
-2. Build in **Profile** or **Release** on a **physical device** (measured on an
-   iPhone 17 Pro, iOS 26.5.2).
+2. Build in **Profile** or **Release** on a **physical device** (original report
+   measured on an iPhone 17 Pro / iOS 26.5.2; the numbers below are from an
+   iPhone 14 Plus running this fork).
 3. Launch, tap **⚠︎ Tile Memory Growth Repro**, tap **Start flight**.
 4. Watch `FOOTPRINT` in the on-screen readout, or Xcode's Memory gauge.
 
 ## What you should see
 
-Resident memory climbs monotonically and never plateaus. Measured upstream:
-1.86 GB after ~1 min 35 s, 2.34 GB after ~3 min 50 s, then an `EXC_RESOURCE`
-jetsam kill at ~2.25 GB with a debugger attached, ~3 GB without (no crash
-report, consistent with jetsam rather than a crash).
+Resident memory climbs monotonically and never plateaus.
+
+Measured with this fork on an iPhone 14 Plus, Release, launched without a
+debugger: baseline 37 MB, then 1867 MB after 2.37 km of flight (2374 frames) at
+`range: 200 m`, still climbing. Left running, the app dies at 3064 MB with no
+crash report, which is consistent with a jetsam kill rather than a crash.
+
+The original report, on an iPhone 17 Pro: 1.86 GB after ~1 min 35 s, 2.34 GB
+after ~3 min 50 s, and an `EXC_RESOURCE` termination at ~2.25 GB with a debugger
+attached.
 
 Two things the buttons make easy to check:
 
